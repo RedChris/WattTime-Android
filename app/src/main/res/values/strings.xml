@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Watt Time</string>
+
+    <string name="main_convertedLengthSeconds">It will take %1$d seconds</string>
+    <string name="main_convertedLengthMinutes">It will take %1$d minutes \n %2$d seconds</string>
+    <string name="main_convertedLengthHours">It will take %1$d hours \n %2$d minutes \n &amp; %3$d seconds</string>
+
+    <string name="mainSettings_title">How many watts is your microwave?</string>
+    <string name="mainSettings_wattageLabel">%1$d Watts</string>
+    <string name="mainSettings_saveButton">Save</string>
+    <string name="timer_message">Time your meal</string>
+</resources>

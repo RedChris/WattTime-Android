@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "545834042587",
+    "firebase_url": "https://watttime-ba2ab.firebaseio.com",
+    "project_id": "watttime-ba2ab",
+    "storage_bucket": "watttime-ba2ab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545834042587:android:02b869c872543ee3",
+        "android_client_info": {
+          "package_name": "uk.co.monolithstudios.watttime"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "545834042587-hdkkoq6mngq969890n6jt4dthsujj7ml.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfsDeA8p3EeltkvzuKUgIpsgGvg7mv6co"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "545834042587-hdkkoq6mngq969890n6jt4dthsujj7ml.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
