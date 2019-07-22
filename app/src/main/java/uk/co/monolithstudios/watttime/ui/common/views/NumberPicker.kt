@@ -12,8 +12,9 @@ import uk.co.monolithstudios.watttime.domain.ScreenUtils
 class NumberPicker @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
     : FrameLayout(context, attrs, defStyleAttr) {
 
-    private val data = (1..20).toList().map { it.toString() } as ArrayList<String>
+    private val data =  ArrayList<String>()
     private val sliderLayoutManager: SliderLayoutManager
+    private val sliderAdapter: SliderAdapter
 
     init {
         View.inflate(context, R.layout.view_numberpicker, this)
@@ -21,7 +22,6 @@ class NumberPicker @JvmOverloads constructor(context: Context, attrs: AttributeS
         val padding: Int = ScreenUtils.getScreenWidth(context)/2 - ScreenUtils.dpToPx(context, 40)
         vertical_picker.setPadding(padding, 0, padding, 0)
 
-        // Setting layout manager
         sliderLayoutManager = SliderLayoutManager(context).apply {
             callback = object : SliderLayoutManager.OnItemSelectedListener {
                 override fun onItemSelected(layoutPosition: Int) {
@@ -30,8 +30,8 @@ class NumberPicker @JvmOverloads constructor(context: Context, attrs: AttributeS
         }
         vertical_picker.layoutManager = sliderLayoutManager
 
-                // Setting Adapter
-        vertical_picker.adapter = SliderAdapter().apply {
+        sliderAdapter = SliderAdapter()
+        vertical_picker.adapter = sliderAdapter.apply {
             setData(data)
             callback = object : SliderAdapter.Callback {
                 override fun onItemClicked(view: View) {
@@ -41,12 +41,12 @@ class NumberPicker @JvmOverloads constructor(context: Context, attrs: AttributeS
         }
     }
 
-    fun setOnItemSelectedListener(onItemSelectedListener: SliderLayoutManager.OnItemSelectedListener) {
-        sliderLayoutManager.callback = onItemSelectedListener
+    fun setData(data: List<String>) {
+        sliderAdapter.setData(data)
     }
 
-    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
-
+    fun setOnItemSelectedListener(onItemSelectedListener: SliderLayoutManager.OnItemSelectedListener) {
+        sliderLayoutManager.callback = onItemSelectedListener
     }
 
 }

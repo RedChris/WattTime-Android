@@ -12,9 +12,11 @@ class MainActivityPresenter (private val mainView: MainView,
                              private val timerIntentLauncher: TimerIntentLauncher,
                              private val timeFormatter: TimeFormatter) {
 
-    val userMicrowaveWattage = prefs.microwaveWattage
-    val hasAvailableTimerIntentApplications = timerIntentLauncher.checkForAvailableTimerApplications()
-    var duration: Duration? = null
+    private val userMicrowaveWattage = prefs.microwaveWattage
+    private val hasAvailableTimerIntentApplications = timerIntentLauncher.checkForAvailableTimerApplications()
+    private var wattage = 0
+    private var duration: Duration = Duration.ZERO
+    private var convertedDuration: Duration = Duration.ZERO
 
 
     init {
@@ -23,10 +25,26 @@ class MainActivityPresenter (private val mainView: MainView,
         }
 
         mainView.showUserMicrowaveWattage(userMicrowaveWattage)
+        mainView.showPackageDuration(timeFormatter.convertDurationToSting(duration))
+        mainView.showPackageWattage(wattage)
+        convertWattage()
     }
 
-    fun onUserWantsToConvert(duration: Duration, prodcutWattage: Int) {
-        val convertedDuration = wattageCalculator.convertMicrowaveTime(userMicrowaveWattage, prodcutWattage, duration)
+    fun onUserWantsToSetProductWattage(productWattage: Int) {
+        this.wattage = productWattage
+        mainView.showPackageWattage(wattage)
+        convertWattage()
+    }
+
+    fun onUserWantsToConvert(duration: Duration) {
+        this.duration = duration
+        mainView.showPackageDuration(timeFormatter.convertDurationToSting(duration))
+        convertWattage()
+    }
+
+    private fun convertWattage() {
+        val convertedDuration = wattageCalculator.convertMicrowaveTime(userMicrowaveWattage, wattage, duration)
+        this.convertedDuration = convertedDuration
         mainView.showConvertedTime(timeFormatter.convertDurationToSting(convertedDuration))
         if (hasAvailableTimerIntentApplications) {
             mainView.enableStartTimerButton(true)
@@ -37,8 +55,7 @@ class MainActivityPresenter (private val mainView: MainView,
         mainView.showMicrowaveSettingsPage()
     }
 
-    fun onUserWantsToLauncherTimer() {
-        duration?.let { timerIntentLauncher.startTimer(it.seconds.toInt()) }
-
+    fun onUserWantsToLaunchTimer() {
+        timerIntentLauncher.startTimer(convertedDuration.seconds.toInt())
     }
 }

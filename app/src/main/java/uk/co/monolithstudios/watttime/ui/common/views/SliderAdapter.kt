@@ -11,19 +11,14 @@ class SliderAdapter : RecyclerView.Adapter<SliderItemViewHolder>() {
 
     private val data: ArrayList<String> = ArrayList()
     var callback: Callback? = null
-    val clickListener = object : View.OnClickListener {
-        override fun onClick(v: View?) {
-            v?.let { callback?.onItemClicked(it) }
-        }
-    }
+    private val clickListener = View.OnClickListener { v -> v?.let { callback?.onItemClicked(it) } }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SliderItemViewHolder {
         val itemView: View = LayoutInflater.from(parent.context).inflate(R.layout.item_numberpicker, parent, false)
 
         itemView.setOnClickListener(clickListener)
 
-        val horizontalViewHolder = SliderItemViewHolder(itemView)
-        return horizontalViewHolder
+        return SliderItemViewHolder(itemView)
     }
 
     override fun getItemCount(): Int {
@@ -34,7 +29,7 @@ class SliderAdapter : RecyclerView.Adapter<SliderItemViewHolder>() {
         holder.tvItem?.text = data[position]
     }
 
-    fun setData(data: ArrayList<String>) {
+    fun setData(data: List<String>) {
         this.data.clear()
         this.data.addAll(data)
         notifyDataSetChanged()

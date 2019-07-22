@@ -5,4 +5,6 @@ interface MainView {
     fun enableStartTimerButton(showStartTimerButton: Boolean)
     fun showMicrowaveSettingsPage()
     fun showConvertedTime(durationString: String)
+    fun showPackageDuration(durationString: String)
+    fun showPackageWattage(wattage: Int)
 }

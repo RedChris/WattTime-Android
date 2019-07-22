@@ -1,12 +1,78 @@
 <resources>
     <string name="app_name">Watt Time</string>
 
-    <string name="main_convertedLengthSeconds">It will take %1$d seconds</string>
-    <string name="main_convertedLengthMinutes">It will take %1$d minutes \n %2$d seconds</string>
-    <string name="main_convertedLengthHours">It will take %1$d hours \n %2$d minutes \n &amp; %3$d seconds</string>
+    <string name="main_convertedLengthSeconds">%1$d seconds</string>
+    <string name="main_convertedLengthMinutes">%1$d minutes, %2$d seconds</string>
+    <string name="main_convertedLengthHours">%1$d hours, %2$d minutes, &amp; %3$d seconds</string>
+
+    <string name="main_yourMicrowaveText">If your microwave is %1$s Watts</string>
+    <string name="main_foodPackageText">And the package says %1$s Watts.</string>
+    <string name="main_for">for %1$s</string>
+    <string name="main_resultText">It will take %1$s .</string>
+    <string name="main_startTimer">Start Timer</string>
+
+    <string name="main_sheet_seconds">Seconds</string>
+    <string name="main_sheet_minutes">Minutes</string>
+    <string name="main_sheet_title">%1$d %2$s : %3$d %4$s</string>
+    <string name="main_sheet_set">Set</string>
 
     <string name="mainSettings_title">How many watts is your microwave?</string>
-    <string name="mainSettings_wattageLabel">%1$d Watts</string>
+    <string name="mainSettings_wattageLabel">%1$s Watts</string>
     <string name="mainSettings_saveButton">Save</string>
+
     <string name="timer_message">Time your meal</string>
+
+    <plurals name="seconds">
+        <item quantity="zero">seconds</item>
+        <item quantity="one">second</item>
+        <item quantity="other">seconds</item>
+    </plurals>
+
+    <plurals name="minutes">
+        <item quantity="zero">minutes</item>
+        <item quantity="one">minute</item>
+        <item quantity="other">minutes</item>
+    </plurals>
+
+    <string-array name="wattages_array">
+        <item>50</item>
+        <item>100</item>
+        <item>150</item>
+        <item>200</item>
+        <item>250</item>
+        <item>300</item>
+        <item>350</item>
+        <item>400</item>
+        <item>450</item>
+        <item>500</item>
+        <item>550</item>
+        <item>600</item>
+        <item>650</item>
+        <item>700</item>
+        <item>750</item>
+        <item>800</item>
+        <item>850</item>
+        <item>900</item>
+        <item>950</item>
+        <item>1000</item>
+        <item>1050</item>
+        <item>1100</item>
+        <item>1150</item>
+        <item>1200</item>
+        <item>1250</item>
+        <item>1300</item>
+        <item>1350</item>
+        <item>1400</item>
+        <item>1450</item>
+        <item>1500</item>
+        <item>1550</item>
+        <item>1600</item>
+        <item>1650</item>
+        <item>1700</item>
+        <item>1750</item>
+        <item>1800</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

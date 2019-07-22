@@ -10,18 +10,13 @@ class TimeFormatter(private val context: Context) {
     fun convertDurationToSting(duration: Duration): String {
         return when {
             duration.compareTo(Duration.ofMinutes(1)) == -1
-                -> resolveString(R.string.main_convertedLengthSeconds, duration.seconds.toInt())
+                -> context.getString(R.string.main_convertedLengthSeconds, duration.seconds)
             duration.compareTo(Duration.ofHours(1)) == -1
-                -> resolveString(R.string.main_convertedLengthMinutes, duration.toMinutes().toInt(), duration.seconds.toInt())
+                -> context.getString(R.string.main_convertedLengthMinutes, duration.toMinutes(), duration.seconds)
             else
-                -> resolveString(R.string.main_convertedLengthMinutes, duration.toHours().toInt(),
-                duration.toMinutes().toInt(),
-                duration.seconds.toInt())
+                -> context.getString(R.string.main_convertedLengthHours, duration.toHours(),
+                duration.toMinutes(),
+                duration.seconds)
         }
-
     }
-
-    private fun resolveString(@StringRes stringId: Int, vararg strings: Int)
-            = context.getString(stringId).format(strings)
-
 }

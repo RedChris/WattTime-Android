@@ -14,6 +14,8 @@ import uk.co.monolithstudios.watttime.ui.main.MainActivity
 
 class MicrowaveSettingsActivity : AppCompatActivity(), MicrowaveSettingsView {
 
+    private var wattArray: Array<String> = arrayOf()
+
     companion object {
         fun start(context: Context) {
             context.startActivity(Intent(context, MicrowaveSettingsActivity::class.java))
@@ -26,14 +28,18 @@ class MicrowaveSettingsActivity : AppCompatActivity(), MicrowaveSettingsView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_microwave_settings)
 
+        wattArray = resources.getStringArray(R.array.wattages_array)
         microwaveSettingsPresenter = MicrowaveSettingsPresenter(this, Prefs(this))
 
         numberPicker.setOnItemSelectedListener(object : SliderLayoutManager.OnItemSelectedListener {
             override fun onItemSelected(layoutPosition: Int) {
-                selectedWattsText.text = getString(R.string.mainSettings_wattageLabel).format(layoutPosition)
-                microwaveSettingsPresenter.onUserSelectedWattage(layoutPosition)
+                selectedWattsText.text = getString(R.string.mainSettings_wattageLabel).format(wattArray[layoutPosition])
+                microwaveSettingsPresenter.onUserSelectedWattage(wattArray[layoutPosition].toInt())
             }
         })
+
+        numberPicker.setData(wattArray.toList())
+
 
         saveButton.setOnClickListener { microwaveSettingsPresenter.onUserWantsToSaveWattage() }
     }
