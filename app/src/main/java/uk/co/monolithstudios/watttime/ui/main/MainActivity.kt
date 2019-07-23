@@ -2,6 +2,7 @@ package uk.co.monolithstudios.watttime.ui.main
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.AnimationDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Spannable
@@ -37,6 +38,13 @@ class MainActivity : AppCompatActivity(), MainView, TimePickerBottomSheet.OnFrag
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val animationBackground = mainLayout.background as AnimationDrawable
+        animationBackground.apply {
+            setEnterFadeDuration(2000)
+            setExitFadeDuration(4000)
+            start()
+        }
+
         wattArray = resources.getStringArray(R.array.wattages_array)
         mainActivityPresenter = MainActivityPresenter(this, Prefs(this), WattageCalculator(), TimerIntentLauncher(this), TimeFormatter(this))
 
@@ -47,6 +55,7 @@ class MainActivity : AppCompatActivity(), MainView, TimePickerBottomSheet.OnFrag
         })
 
         numberPicker.setData(wattArray.toList())
+        numberPicker.goToPosition(wattArray.count() / 2)
 
         timerButton.setOnClickListener { mainActivityPresenter.onUserWantsToLaunchTimer() }
 

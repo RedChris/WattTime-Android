@@ -2,6 +2,7 @@ package uk.co.monolithstudios.watttime.ui.microwavesettings
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.AnimationDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -28,6 +29,13 @@ class MicrowaveSettingsActivity : AppCompatActivity(), MicrowaveSettingsView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_microwave_settings)
 
+        val animationBackground = mainLayout.background as AnimationDrawable
+        animationBackground.apply {
+            setEnterFadeDuration(2000)
+            setExitFadeDuration(4000)
+            start()
+        }
+
         wattArray = resources.getStringArray(R.array.wattages_array)
         microwaveSettingsPresenter = MicrowaveSettingsPresenter(this, Prefs(this))
 
@@ -40,10 +48,12 @@ class MicrowaveSettingsActivity : AppCompatActivity(), MicrowaveSettingsView {
 
         numberPicker.setData(wattArray.toList())
 
-
         saveButton.setOnClickListener { microwaveSettingsPresenter.onUserWantsToSaveWattage() }
     }
 
+    override fun shoWattage(wattage: Int) {
+        numberPicker.goToPosition(wattage / 50)
+    }
     override fun setShowSaveButton(showSaveButton: Boolean) {
         saveButton.visibility = if (showSaveButton) View.VISIBLE else View.INVISIBLE
     }

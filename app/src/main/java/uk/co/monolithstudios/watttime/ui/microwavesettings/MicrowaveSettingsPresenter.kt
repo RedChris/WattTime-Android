@@ -8,6 +8,12 @@ class MicrowaveSettingsPresenter (private val microwaveSettingsView: MicrowaveSe
 
     init {
         microwaveSettingsView.setShowSaveButton(false)
+
+        if (prefs.microwaveWattage == -1) {
+            microwaveSettingsView.shoWattage(800)
+        } else {
+            microwaveSettingsView.shoWattage(prefs.microwaveWattage)
+        }
     }
 
     fun onUserSelectedWattage(wattage: Int) {

@@ -41,6 +41,8 @@ class NumberPicker @JvmOverloads constructor(context: Context, attrs: AttributeS
         }
     }
 
+    fun goToPosition(position: Int) = vertical_picker.smoothScrollToPosition(position)
+
     fun setData(data: List<String>) {
         sliderAdapter.setData(data)
     }
