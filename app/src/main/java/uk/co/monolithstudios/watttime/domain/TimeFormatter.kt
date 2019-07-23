@@ -12,11 +12,11 @@ class TimeFormatter(private val context: Context) {
             duration.compareTo(Duration.ofMinutes(1)) == -1
                 -> context.getString(R.string.main_convertedLengthSeconds, duration.seconds)
             duration.compareTo(Duration.ofHours(1)) == -1
-                -> context.getString(R.string.main_convertedLengthMinutes, duration.toMinutes(), duration.seconds)
+                -> context.getString(R.string.main_convertedLengthMinutes, duration.toMinutes(), duration.minus(Duration.ofMinutes(duration.toMinutes())).seconds )
             else
                 -> context.getString(R.string.main_convertedLengthHours, duration.toHours(),
-                duration.toMinutes(),
-                duration.seconds)
+                duration.minus(Duration.ofHours(duration.toHours())).toMinutes(),
+                duration.minus(Duration.ofMinutes(duration.toMinutes())).seconds)
         }
     }
 }

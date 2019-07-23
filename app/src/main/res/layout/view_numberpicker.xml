@@ -16,13 +16,13 @@
             android:clipToPadding="false" />
 
     <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/colorAccent"
+            android:background="@drawable/background_selector"
             android:alpha="0.2"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

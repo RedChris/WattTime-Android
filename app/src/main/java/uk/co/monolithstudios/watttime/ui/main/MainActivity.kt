@@ -38,8 +38,6 @@ class MainActivity : AppCompatActivity(), MainView, TimePickerBottomSheet.OnFrag
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-
         val animationBackground = mainLayout.background as AnimationDrawable
         animationBackground.apply {
             setEnterFadeDuration(2000)
@@ -62,7 +60,7 @@ class MainActivity : AppCompatActivity(), MainView, TimePickerBottomSheet.OnFrag
         timerButton.setOnClickListener { mainActivityPresenter.onUserWantsToLaunchTimer() }
 
         val timeNumberPickerFragment = TimePickerBottomSheet.newInstance(0, 0)
-        supportFragmentManager.beginTransaction().add(R.id.fragmentHolder, timeNumberPickerFragment).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.fragmentHolder, timeNumberPickerFragment).commit()
     }
 
     override fun showPackageWattage(wattage: Int) {
@@ -87,7 +85,7 @@ class MainActivity : AppCompatActivity(), MainView, TimePickerBottomSheet.OnFrag
             }
 
         } , 20, spannable.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        spannable.setSpan(RelativeSizeSpan(1.2f),  20, spannable.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannable.setSpan(RelativeSizeSpan(1.2f),  21, spannable.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
         yourMicrowaveText.apply {
             text = spannable
