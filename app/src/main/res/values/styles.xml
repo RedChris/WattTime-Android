@@ -13,4 +13,9 @@
 
     </style>
 
+    <style name="textTitle">
+        <item name="android:fontFamily">@font/comfortaa_bold</item>
+        <item name="android:textSize">36sp</item>
+    </style>
+
 </resources>

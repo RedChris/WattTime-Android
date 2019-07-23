@@ -38,6 +38,8 @@ class MainActivity : AppCompatActivity(), MainView, TimePickerBottomSheet.OnFrag
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+
         val animationBackground = mainLayout.background as AnimationDrawable
         animationBackground.apply {
             setEnterFadeDuration(2000)
@@ -85,8 +87,7 @@ class MainActivity : AppCompatActivity(), MainView, TimePickerBottomSheet.OnFrag
             }
 
         } , 20, spannable.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        spannable.setSpan(ForegroundColorSpan(ContextCompat.getColor(this, R.color.material_blue_grey_950)), 20, spannable.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        spannable.setSpan(RelativeSizeSpan(1.5f),  20, spannable.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannable.setSpan(RelativeSizeSpan(1.2f),  20, spannable.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
         yourMicrowaveText.apply {
             text = spannable

@@ -6,7 +6,7 @@
     <string name="main_convertedLengthHours">%1$d hours, %2$d minutes, &amp; %3$d seconds</string>
 
     <string name="main_yourMicrowaveText">If your microwave is %1$s Watts</string>
-    <string name="main_foodPackageText">And the package says %1$s Watts.</string>
+    <string name="main_foodPackageText">and the package says %1$s Watts.</string>
     <string name="main_for">for %1$s</string>
     <string name="main_resultText">It will take %1$s .</string>
     <string name="main_startTimer">Start Timer</string>

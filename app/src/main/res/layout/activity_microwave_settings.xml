@@ -14,7 +14,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
+        android:fontFamily="@font/comfortaa"
+        android:gravity="center_horizontal"
         android:text="@string/mainSettings_wattageLabel"
+        android:textAlignment="center"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/numberPicker"
         app:layout_constraintEnd_toEndOf="@+id/numberPicker"
         app:layout_constraintStart_toStartOf="@+id/numberPicker"
@@ -22,10 +26,14 @@
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="wrap_content"
+        style="@style/textTitle"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="32dp"
         android:text="@string/mainSettings_title"
+        android:textColorLink="#b3ffffff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

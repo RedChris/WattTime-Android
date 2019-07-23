@@ -11,19 +11,27 @@
 
     <TextView
         android:id="@+id/yourMicrowaveText"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/comfortaa_bold"
         android:text="@string/main_yourMicrowaveText"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:textColorLink="#b3ffffff"
+        android:textSize="32sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/foodPackageText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/comfortaa"
         android:text="@string/main_foodPackageText"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/numberPicker"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -41,14 +49,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="63dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        android:fontFamily="@font/comfortaa"
         android:text="@string/main_resultText"
+        android:textAlignment="textEnd"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/timerButton"
-        app:layout_constraintTop_toBottomOf="@+id/fragmentHolder" />
+        app:layout_constraintStart_toEndOf="@+id/timerButton" />
 
     <Button
         android:id="@+id/timerButton"
@@ -56,7 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/main_startTimer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -65,7 +73,10 @@
         android:id="@+id/forTimeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/comfortaa"
         android:text="@string/main_for"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/numberPicker" />
 
