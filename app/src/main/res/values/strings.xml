@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Watt Time</string>
 
-    <string name="main_convertedLengthSeconds">%1$d seconds</string>
-    <string name="main_convertedLengthMinutes">%1$d minutes, %2$d seconds</string>
-    <string name="main_convertedLengthHours">%1$d hours, %2$d minutes, &amp; %3$d seconds</string>
+    <string name="main_convertedLengthSeconds">%1$d %2$s</string>
+    <string name="main_convertedLengthMinutes">%1$d %2$s, %3$d %4$s</string>
+    <string name="main_convertedLengthHours">%1$d %2$s, %3$d %4$s, &amp; %5$d %6$s</string>
 
     <string name="main_yourMicrowaveText">If your microwave is %1$s Watts</string>
     <string name="main_foodPackageText">and the package says %1$s Watts.</string>
@@ -32,6 +32,12 @@
         <item quantity="zero">minutes</item>
         <item quantity="one">minute</item>
         <item quantity="other">minutes</item>
+    </plurals>
+
+    <plurals name="hours">
+        <item quantity="zero">hours</item>
+        <item quantity="one">hour</item>
+        <item quantity="other">hours</item>
     </plurals>
 
     <string-array name="wattages_array">
@@ -72,7 +78,4 @@
         <item>1750</item>
         <item>1800</item>
     </string-array>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

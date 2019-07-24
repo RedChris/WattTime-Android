@@ -9,10 +9,8 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
-import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import android.view.View
-import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
 import org.threeten.bp.Duration
 import uk.co.monolithstudios.watttime.R
@@ -22,6 +20,10 @@ import uk.co.monolithstudios.watttime.domain.TimerIntentLauncher
 import uk.co.monolithstudios.watttime.domain.WattageCalculator
 import uk.co.monolithstudios.watttime.ui.common.views.SliderLayoutManager
 import uk.co.monolithstudios.watttime.ui.microwavesettings.MicrowaveSettingsActivity
+import android.view.WindowManager
+import android.os.Build
+
+
 
 class MainActivity : AppCompatActivity(), MainView, TimePickerBottomSheet.OnFragmentInteractionListener {
 
@@ -36,6 +38,13 @@ class MainActivity : AppCompatActivity(), MainView, TimePickerBottomSheet.OnFrag
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+            )
+        }
+
         setContentView(R.layout.activity_main)
 
         val animationBackground = mainLayout.background as AnimationDrawable

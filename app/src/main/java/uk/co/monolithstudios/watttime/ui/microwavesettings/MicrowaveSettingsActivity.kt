@@ -3,9 +3,11 @@ package uk.co.monolithstudios.watttime.ui.microwavesettings
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import kotlinx.android.synthetic.main.activity_microwave_settings.*
 import kotlinx.android.synthetic.main.view_numberpicker.view.*
 import uk.co.monolithstudios.watttime.R
@@ -26,6 +28,13 @@ class MicrowaveSettingsActivity : AppCompatActivity(), MicrowaveSettingsView {
     lateinit var microwaveSettingsPresenter: MicrowaveSettingsPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+            )
+        }
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_microwave_settings)
 
