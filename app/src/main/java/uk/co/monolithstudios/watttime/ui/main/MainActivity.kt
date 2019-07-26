@@ -22,10 +22,10 @@ import uk.co.monolithstudios.watttime.ui.common.views.SliderLayoutManager
 import uk.co.monolithstudios.watttime.ui.microwavesettings.MicrowaveSettingsActivity
 import android.view.WindowManager
 import android.os.Build
+import android.content.res.Configuration
 
 
-
-class MainActivity : AppCompatActivity(), MainView, TimePickerBottomSheet.OnFragmentInteractionListener {
+class MainActivity : AppCompatActivity(), MainView, TimePickerFragment.OnFragmentInteractionListener {
 
     lateinit var mainActivityPresenter: MainActivityPresenter
     private var wattArray: Array<String> = arrayOf()
@@ -64,12 +64,18 @@ class MainActivity : AppCompatActivity(), MainView, TimePickerBottomSheet.OnFrag
         })
 
         numberPicker.setData(wattArray.toList())
-        numberPicker.goToPosition(wattArray.count() / 2)
 
         timerButton.setOnClickListener { mainActivityPresenter.onUserWantsToLaunchTimer() }
 
-        val timeNumberPickerFragment = TimePickerBottomSheet.newInstance(0, 0)
-        supportFragmentManager.beginTransaction().replace(R.id.fragmentHolder, timeNumberPickerFragment).commit()
+        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            val timeNumberPickerFragment = TimePickerFragment.newInstance(0, 0)
+            supportFragmentManager.beginTransaction().replace(R.id.fragmentHolder, timeNumberPickerFragment).commit()
+        } else {
+            val fragment = supportFragmentManager.findFragmentById(R.id.fragmentHolder)
+            if (fragment != null) {
+                supportFragmentManager.beginTransaction().remove(fragment).commit()
+            }
+        }
     }
 
     override fun showPackageWattage(wattage: Int) {
@@ -78,6 +84,24 @@ class MainActivity : AppCompatActivity(), MainView, TimePickerBottomSheet.OnFrag
 
     override fun showPackageDuration(durationString: String) {
         forTimeText.text = getString(R.string.main_for, durationString)
+
+        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            val spannable = SpannableString(getString(R.string.main_for, durationString))
+
+            spannable.setSpan(object: ClickableSpan() {
+                override fun onClick(widget: View) {
+                    val timeNumberPickerFragment = TimePickerFragment.newInstance(0, 0)
+                    timeNumberPickerFragment.show(supportFragmentManager, "timeNumberPickerFragment")
+                }
+
+            } , 4, spannable.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            spannable.setSpan(RelativeSizeSpan(1.2f),  4, spannable.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+            forTimeText.apply {
+                text = spannable
+                movementMethod = LinkMovementMethod.getInstance()
+            }
+        }
     }
 
     override fun onTimeChanged(seconds: Int, minutes: Int) {

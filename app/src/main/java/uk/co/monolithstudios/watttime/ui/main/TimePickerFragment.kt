@@ -1,24 +1,26 @@
 package uk.co.monolithstudios.watttime.ui.main
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.NumberPicker
-import android.widget.TextView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.view_numberpicker_bottomsheet.*
+import kotlinx.android.synthetic.main.fragment_timepicker.*
 import uk.co.monolithstudios.watttime.R
 import java.text.DecimalFormat
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import android.app.Dialog
+import android.opengl.Visibility
+import android.widget.FrameLayout
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 private const val ARG_MINUTES = "minutes"
 private const val ARG_SECONDS = "seconds"
 
-class TimePickerBottomSheet : Fragment() {
+class TimePickerFragment : BottomSheetDialogFragment() {
 
+    private var dialogMode = false
     private var minutes: Int? = null
     private var seconds: Int? = null
     private var listener: OnFragmentInteractionListener? = null
@@ -32,12 +34,29 @@ class TimePickerBottomSheet : Fragment() {
         }
     }
 
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val bottomSheetDialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
+        bottomSheetDialog.setOnShowListener { dia ->
+            val dialog = dia as BottomSheetDialog
+            val bottomSheet: FrameLayout = dialog.findViewById(com.google.android.material.R.id.design_bottom_sheet)!!
+            BottomSheetBehavior.from(bottomSheet).state = BottomSheetBehavior.STATE_EXPANDED
+            BottomSheetBehavior.from(bottomSheet).skipCollapsed = true
+            BottomSheetBehavior.from(bottomSheet).isHideable = true
+        }
+
+        dialogMode = true
+        return bottomSheetDialog
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.view_numberpicker_bottomsheet, container, false)
+        return inflater.inflate(R.layout.fragment_timepicker, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setButton.visibility = if (dialogMode) View.VISIBLE else View.INVISIBLE
+
         secondsPicker.apply {
             minValue = 0
             maxValue = 60
@@ -82,7 +101,7 @@ class TimePickerBottomSheet : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance(minutes: Int, seconds: Int) =
-            TimePickerBottomSheet().apply {
+            TimePickerFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_MINUTES, minutes)
                     putInt(ARG_SECONDS, seconds)

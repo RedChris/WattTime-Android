@@ -40,8 +40,8 @@ class MicrowaveSettingsActivity : AppCompatActivity(), MicrowaveSettingsView {
 
         val animationBackground = mainLayout.background as AnimationDrawable
         animationBackground.apply {
-            setEnterFadeDuration(2000)
-            setExitFadeDuration(4000)
+            setEnterFadeDuration(1000)
+            setExitFadeDuration(2000)
             start()
         }
 
@@ -61,7 +61,7 @@ class MicrowaveSettingsActivity : AppCompatActivity(), MicrowaveSettingsView {
     }
 
     override fun shoWattage(wattage: Int) {
-        numberPicker.goToPosition(wattage / 50)
+        numberPicker.goToPosition((wattage / 50) -1)
     }
     override fun setShowSaveButton(showSaveButton: Boolean) {
         saveButton.visibility = if (showSaveButton) View.VISIBLE else View.INVISIBLE
