@@ -17,6 +17,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 
 private const val ARG_MINUTES = "minutes"
 private const val ARG_SECONDS = "seconds"
+private const val ARG_DIALOG_MODE = "dialog_mode"
 
 class TimePickerFragment : BottomSheetDialogFragment() {
 
@@ -31,6 +32,7 @@ class TimePickerFragment : BottomSheetDialogFragment() {
         arguments?.let {
             minutes = it.getInt(ARG_MINUTES)
             seconds = it.getInt(ARG_SECONDS)
+            dialogMode = it.getBoolean(ARG_DIALOG_MODE)
         }
     }
 
@@ -57,6 +59,8 @@ class TimePickerFragment : BottomSheetDialogFragment() {
 
         setButton.visibility = if (dialogMode) View.VISIBLE else View.INVISIBLE
 
+        setButton.setOnClickListener { if (dialogMode) dismiss() }
+
         secondsPicker.apply {
             minValue = 0
             maxValue = 60
@@ -78,6 +82,8 @@ class TimePickerFragment : BottomSheetDialogFragment() {
             }
             seconds?.let { value = seconds as Int }
         }
+
+        setTime(minutes!!.toLong(), seconds!!.toLong())
     }
 
     override fun onAttach(context: Context) {
@@ -94,17 +100,23 @@ class TimePickerFragment : BottomSheetDialogFragment() {
         listener = null
     }
 
+    fun setTime(minutes: Long, seconds: Long) {
+        minutesPicker.value = minutes.toInt()
+        secondsPicker.value = seconds.toInt()
+    }
+
     interface OnFragmentInteractionListener {
         fun onTimeChanged(seconds: Int, minutes: Int)
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(minutes: Int, seconds: Int) =
+        fun newInstance(minutes: Int, seconds: Int, dialogMode: Boolean) =
             TimePickerFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_MINUTES, minutes)
                     putInt(ARG_SECONDS, seconds)
+                    putBoolean(ARG_DIALOG_MODE, dialogMode)
                 }
             }
     }

@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity(), MainView, TimePickerFragment.OnFragmen
 
     lateinit var mainActivityPresenter: MainActivityPresenter
     private var wattArray: Array<String> = arrayOf()
+    private var timeNumberPickerFragment: TimePickerFragment? = null
 
     companion object {
         fun start(context: Context) {
@@ -49,8 +50,8 @@ class MainActivity : AppCompatActivity(), MainView, TimePickerFragment.OnFragmen
 
         val animationBackground = mainLayout.background as AnimationDrawable
         animationBackground.apply {
-            setEnterFadeDuration(2000)
-            setExitFadeDuration(4000)
+            setEnterFadeDuration(1000)
+            setExitFadeDuration(2000)
             start()
         }
 
@@ -68,13 +69,36 @@ class MainActivity : AppCompatActivity(), MainView, TimePickerFragment.OnFragmen
         timerButton.setOnClickListener { mainActivityPresenter.onUserWantsToLaunchTimer() }
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            val timeNumberPickerFragment = TimePickerFragment.newInstance(0, 0)
-            supportFragmentManager.beginTransaction().replace(R.id.fragmentHolder, timeNumberPickerFragment).commit()
+            timeNumberPickerFragment = TimePickerFragment.newInstance(0, 0, false)
+            supportFragmentManager.beginTransaction().replace(R.id.fragmentHolder, timeNumberPickerFragment!!).commit()
         } else {
             val fragment = supportFragmentManager.findFragmentById(R.id.fragmentHolder)
             if (fragment != null) {
                 supportFragmentManager.beginTransaction().remove(fragment).commit()
             }
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mainActivityPresenter.saveInstance(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        mainActivityPresenter.restoreInstance(savedInstanceState)
+    }
+
+    override fun showRestoreDuration(minutes: Long, seconds: Long) {
+        timeNumberPickerFragment?.setTime(minutes, seconds)
+    }
+
+    override fun showUserDuration(minutes: Long, seconds: Long) {
+        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            val timeNumberPickerFragment = TimePickerFragment.newInstance(minutes.toInt(), seconds.toInt(), true)
+            timeNumberPickerFragment.show(supportFragmentManager, "timeNumberPickerFragment")
+        } else {
+            timeNumberPickerFragment?.setTime(minutes, seconds)
         }
     }
 
@@ -90,8 +114,7 @@ class MainActivity : AppCompatActivity(), MainView, TimePickerFragment.OnFragmen
 
             spannable.setSpan(object: ClickableSpan() {
                 override fun onClick(widget: View) {
-                    val timeNumberPickerFragment = TimePickerFragment.newInstance(0, 0)
-                    timeNumberPickerFragment.show(supportFragmentManager, "timeNumberPickerFragment")
+                    mainActivityPresenter.onUserWantsToSeeSelectTimer()
                 }
 
             } , 4, spannable.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)

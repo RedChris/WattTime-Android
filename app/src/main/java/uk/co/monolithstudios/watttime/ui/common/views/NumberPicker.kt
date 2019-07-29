@@ -54,6 +54,7 @@ class NumberPicker @JvmOverloads constructor(context: Context, attrs: AttributeS
 
     fun setData(data: List<String>) {
         sliderAdapter.setData(data)
+        vertical_picker.smoothScrollToPosition(0)
     }
 
     fun setOnItemSelectedListener(onItemSelectedListener: SliderLayoutManager.OnItemSelectedListener) {

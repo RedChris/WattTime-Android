@@ -57,8 +57,6 @@ class SliderLayoutManager(context: Context?) : LinearLayoutManager(context) {
         }
     }
 
-
-
     override fun onScrollStateChanged(state: Int) {
         super.onScrollStateChanged(state)
 

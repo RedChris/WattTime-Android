@@ -1,5 +1,6 @@
 package uk.co.monolithstudios.watttime.ui.main
 
+import android.os.Bundle
 import org.threeten.bp.Duration
 import uk.co.monolithstudios.watttime.data.Prefs
 import uk.co.monolithstudios.watttime.domain.TimeFormatter
@@ -11,6 +12,8 @@ class MainActivityPresenter (private val mainView: MainView,
                              private val wattageCalculator: WattageCalculator,
                              private val timerIntentLauncher: TimerIntentLauncher,
                              private val timeFormatter: TimeFormatter) {
+
+    private val KEY_MICROWAVE_SECONDS = "KEY_MICROWAVE_SECONDS"
 
     private val userMicrowaveWattage = prefs.microwaveWattage
     private val hasAvailableTimerIntentApplications = timerIntentLauncher.checkForAvailableTimerApplications()
@@ -57,5 +60,23 @@ class MainActivityPresenter (private val mainView: MainView,
 
     fun onUserWantsToLaunchTimer() {
         timerIntentLauncher.startTimer(convertedDuration.seconds.toInt())
+    }
+
+    fun saveInstance(outState: Bundle) {
+        outState.putLong(KEY_MICROWAVE_SECONDS, duration.toMillis())
+    }
+
+    fun restoreInstance(savedInstanceState: Bundle?) {
+        if (savedInstanceState != null) {
+            val restoredUserDuration = Duration.ofMillis(savedInstanceState.getLong(KEY_MICROWAVE_SECONDS))
+            val seconds = restoredUserDuration.minus(Duration.ofMinutes(restoredUserDuration.toMinutes())).seconds
+            mainView.showRestoreDuration(restoredUserDuration.toMinutes(), seconds)
+            onUserWantsToConvert(restoredUserDuration)
+        }
+    }
+
+    fun onUserWantsToSeeSelectTimer() {
+        val seconds = duration.minus(Duration.ofMinutes(duration.toMinutes())).seconds
+        mainView.showUserDuration(duration.toMinutes(), seconds)
     }
 }
