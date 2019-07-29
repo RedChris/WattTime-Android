@@ -41,42 +41,4 @@
         <item quantity="other">hours</item>
     </plurals>
 
-    <string-array name="wattages_array">
-        <item>50</item>
-        <item>100</item>
-        <item>150</item>
-        <item>200</item>
-        <item>250</item>
-        <item>300</item>
-        <item>350</item>
-        <item>400</item>
-        <item>450</item>
-        <item>500</item>
-        <item>550</item>
-        <item>600</item>
-        <item>650</item>
-        <item>700</item>
-        <item>750</item>
-        <item>800</item>
-        <item>850</item>
-        <item>900</item>
-        <item>950</item>
-        <item>1000</item>
-        <item>1050</item>
-        <item>1100</item>
-        <item>1150</item>
-        <item>1200</item>
-        <item>1250</item>
-        <item>1300</item>
-        <item>1350</item>
-        <item>1400</item>
-        <item>1450</item>
-        <item>1500</item>
-        <item>1550</item>
-        <item>1600</item>
-        <item>1650</item>
-        <item>1700</item>
-        <item>1750</item>
-        <item>1800</item>
-    </string-array>
 </resources>

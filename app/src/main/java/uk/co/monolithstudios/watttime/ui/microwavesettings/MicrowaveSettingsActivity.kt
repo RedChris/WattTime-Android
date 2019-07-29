@@ -10,14 +10,13 @@ import android.view.View
 import android.view.WindowManager
 import kotlinx.android.synthetic.main.activity_microwave_settings.*
 import kotlinx.android.synthetic.main.view_numberpicker.view.*
+import uk.co.monolithstudios.watttime.Constants
 import uk.co.monolithstudios.watttime.R
 import uk.co.monolithstudios.watttime.data.Prefs
 import uk.co.monolithstudios.watttime.ui.common.views.SliderLayoutManager
 import uk.co.monolithstudios.watttime.ui.main.MainActivity
 
 class MicrowaveSettingsActivity : AppCompatActivity(), MicrowaveSettingsView {
-
-    private var wattArray: Array<String> = arrayOf()
 
     companion object {
         fun start(context: Context) {
@@ -45,17 +44,16 @@ class MicrowaveSettingsActivity : AppCompatActivity(), MicrowaveSettingsView {
             start()
         }
 
-        wattArray = resources.getStringArray(R.array.wattages_array)
         microwaveSettingsPresenter = MicrowaveSettingsPresenter(this, Prefs(this))
 
         numberPicker.setOnItemSelectedListener(object : SliderLayoutManager.OnItemSelectedListener {
             override fun onItemSelected(layoutPosition: Int) {
-                selectedWattsText.text = getString(R.string.mainSettings_wattageLabel).format(wattArray[layoutPosition])
-                microwaveSettingsPresenter.onUserSelectedWattage(wattArray[layoutPosition].toInt())
+                selectedWattsText.text = getString(R.string.mainSettings_wattageLabel).format(Constants.wattages[layoutPosition])
+                microwaveSettingsPresenter.onUserSelectedWattage(Constants.wattages[layoutPosition])
             }
         })
 
-        numberPicker.setData(wattArray.toList())
+        numberPicker.setData(Constants.wattages.map { it.toString()})
 
         saveButton.setOnClickListener { microwaveSettingsPresenter.onUserWantsToSaveWattage() }
     }

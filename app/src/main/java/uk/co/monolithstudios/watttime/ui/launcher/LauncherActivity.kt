@@ -8,7 +8,7 @@ import uk.co.monolithstudios.watttime.ui.microwavesettings.MicrowaveSettingsActi
 
 class LauncherActivity : AppCompatActivity(), LauncherView {
 
-     lateinit var launcherPresenter: LauncherPresenter
+     private lateinit var launcherPresenter: LauncherPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

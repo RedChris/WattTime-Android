@@ -23,12 +23,12 @@ import uk.co.monolithstudios.watttime.ui.microwavesettings.MicrowaveSettingsActi
 import android.view.WindowManager
 import android.os.Build
 import android.content.res.Configuration
+import uk.co.monolithstudios.watttime.Constants
 
 
 class MainActivity : AppCompatActivity(), MainView, TimePickerFragment.OnFragmentInteractionListener {
 
     lateinit var mainActivityPresenter: MainActivityPresenter
-    private var wattArray: Array<String> = arrayOf()
     private var timeNumberPickerFragment: TimePickerFragment? = null
 
     companion object {
@@ -55,16 +55,15 @@ class MainActivity : AppCompatActivity(), MainView, TimePickerFragment.OnFragmen
             start()
         }
 
-        wattArray = resources.getStringArray(R.array.wattages_array)
         mainActivityPresenter = MainActivityPresenter(this, Prefs(this), WattageCalculator(), TimerIntentLauncher(this), TimeFormatter(this))
 
         numberPicker.setOnItemSelectedListener(object : SliderLayoutManager.OnItemSelectedListener {
             override fun onItemSelected(layoutPosition: Int) {
-                mainActivityPresenter.onUserWantsToSetProductWattage(wattArray[layoutPosition].toInt())
+                mainActivityPresenter.onUserWantsToSetProductWattage(Constants.wattages[layoutPosition])
             }
         })
 
-        numberPicker.setData(wattArray.toList())
+        numberPicker.setData(Constants.wattages.map { it.toString() })
 
         timerButton.setOnClickListener { mainActivityPresenter.onUserWantsToLaunchTimer() }
 
