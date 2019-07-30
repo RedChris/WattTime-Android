@@ -1,6 +1,8 @@
 package uk.co.monolithstudios.watttime.ui.common.views
 
 import android.content.Context
+import android.os.Parcel
+import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
@@ -61,4 +63,47 @@ class NumberPicker @JvmOverloads constructor(context: Context, attrs: AttributeS
         sliderLayoutManager.callback = onItemSelectedListener
     }
 
+    public override fun onSaveInstanceState(): Parcelable? {
+        val savedState = SavedState(super.onSaveInstanceState())
+        savedState.position = sliderLayoutManager.getPosition()
+        return savedState
+    }
+
+    public override fun onRestoreInstanceState(state: Parcelable) {
+        if (state is SavedState) {
+            super.onRestoreInstanceState(state.superState)
+            goToPosition(state.position)
+        } else {
+            super.onRestoreInstanceState(state)
+        }
+    }
+
+    internal class SavedState : BaseSavedState {
+
+        var position: Int = 0
+
+        constructor(source: Parcel) : super(source) {
+            position = source.readByte().toInt()
+        }
+
+        constructor(superState: Parcelable) : super(superState)
+
+        override fun writeToParcel(out: Parcel, flags: Int) {
+            super.writeToParcel(out, flags)
+            out.writeByte((position).toByte())
+        }
+
+        companion object {
+            @JvmField
+            val CREATOR = object : Parcelable.Creator<SavedState> {
+                override fun createFromParcel(source: Parcel): SavedState {
+                    return SavedState(source)
+                }
+
+                override fun newArray(size: Int): Array<SavedState?> {
+                    return arrayOfNulls(size)
+                }
+            }
+        }
+    }
 }

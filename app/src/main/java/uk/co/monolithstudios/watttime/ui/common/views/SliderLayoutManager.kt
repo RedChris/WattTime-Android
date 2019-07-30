@@ -69,21 +69,24 @@ class SliderLayoutManager(context: Context?) : LinearLayoutManager(context) {
     }
 
     fun notifyNewPosition() {
+        callback?.onItemSelected(getPosition())
+    }
+
+    fun getPosition(): Int {
         val recyclerViewCenterX = getRecyclerViewCenterX()
         var minDistance = recyclerView.width
         var position = -1
         for (i in 0 until recyclerView.childCount) {
             val child = recyclerView.getChildAt(i)
-            val childCenterX = getDecoratedLeft(child) + (getDecoratedRight(child) - getDecoratedLeft(child)) / 2
+            val childCenterX =
+                getDecoratedLeft(child) + (getDecoratedRight(child) - getDecoratedLeft(child)) / 2
             val newDistance = abs(childCenterX - recyclerViewCenterX)
             if (newDistance < minDistance) {
                 minDistance = newDistance
                 position = recyclerView.getChildLayoutPosition(child)
             }
         }
-
-        // Notify on item selection
-        callback?.onItemSelected(position)
+        return position
     }
 
     private fun getRecyclerViewCenterX() : Int {
