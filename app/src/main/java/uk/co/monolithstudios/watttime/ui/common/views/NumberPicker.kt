@@ -1,7 +1,6 @@
 package uk.co.monolithstudios.watttime.ui.common.views
 
 import android.content.Context
-import android.os.Parcel
 import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.View
@@ -10,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_numberpicker.view.*
 import uk.co.monolithstudios.watttime.R
 import uk.co.monolithstudios.watttime.domain.ScreenUtils
-
 
 
 class NumberPicker @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
@@ -56,54 +54,17 @@ class NumberPicker @JvmOverloads constructor(context: Context, attrs: AttributeS
 
     fun setData(data: List<String>) {
         sliderAdapter.setData(data)
-        vertical_picker.smoothScrollToPosition(0)
     }
 
     fun setOnItemSelectedListener(onItemSelectedListener: SliderLayoutManager.OnItemSelectedListener) {
         sliderLayoutManager.callback = onItemSelectedListener
     }
 
-    public override fun onSaveInstanceState(): Parcelable? {
-        val savedState = SavedState(super.onSaveInstanceState())
-        savedState.position = sliderLayoutManager.getPosition()
-        return savedState
+    fun saveInstance() = sliderLayoutManager.onSaveInstanceState()
+
+    fun restoreInstance(layoutManagerState: Parcelable) {
+        sliderLayoutManager.onRestoreInstanceState(layoutManagerState)
+        post { goToPosition(sliderLayoutManager.getPosition()) }
     }
 
-    public override fun onRestoreInstanceState(state: Parcelable) {
-        if (state is SavedState) {
-            super.onRestoreInstanceState(state.superState)
-            goToPosition(state.position)
-        } else {
-            super.onRestoreInstanceState(state)
-        }
-    }
-
-    internal class SavedState : BaseSavedState {
-
-        var position: Int = 0
-
-        constructor(source: Parcel) : super(source) {
-            position = source.readByte().toInt()
-        }
-
-        constructor(superState: Parcelable) : super(superState)
-
-        override fun writeToParcel(out: Parcel, flags: Int) {
-            super.writeToParcel(out, flags)
-            out.writeByte((position).toByte())
-        }
-
-        companion object {
-            @JvmField
-            val CREATOR = object : Parcelable.Creator<SavedState> {
-                override fun createFromParcel(source: Parcel): SavedState {
-                    return SavedState(source)
-                }
-
-                override fun newArray(size: Int): Array<SavedState?> {
-                    return arrayOfNulls(size)
-                }
-            }
-        }
-    }
 }

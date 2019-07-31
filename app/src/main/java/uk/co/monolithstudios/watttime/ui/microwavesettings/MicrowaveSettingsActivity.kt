@@ -6,6 +6,7 @@ import android.graphics.drawable.AnimationDrawable
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.View
 import android.view.WindowManager
 import kotlinx.android.synthetic.main.activity_microwave_settings.*
@@ -17,6 +18,10 @@ import uk.co.monolithstudios.watttime.ui.common.views.SliderLayoutManager
 import uk.co.monolithstudios.watttime.ui.main.MainActivity
 
 class MicrowaveSettingsActivity : AppCompatActivity(), MicrowaveSettingsView {
+
+    private val KEY_LAYOUT_MANAGER_STATE = "keylayoutmanagerstate"
+
+    private var mLayoutManagerState: Parcelable? = null
 
     companion object {
         fun start(context: Context) {
@@ -43,24 +48,42 @@ class MicrowaveSettingsActivity : AppCompatActivity(), MicrowaveSettingsView {
             setExitFadeDuration(2000)
             start()
         }
+        numberPicker.setData(Constants.wattages.map { it.toString() })
+        if (savedInstanceState != null) {
+            val layoutManagerState: Parcelable = savedInstanceState.getParcelable(KEY_LAYOUT_MANAGER_STATE)
+            numberPicker.restoreInstance(layoutManagerState)
+        } else {
+            numberPicker.goToPosition(0)
+        }
 
         microwaveSettingsPresenter = MicrowaveSettingsPresenter(this, Prefs(this))
 
         numberPicker.setOnItemSelectedListener(object : SliderLayoutManager.OnItemSelectedListener {
             override fun onItemSelected(layoutPosition: Int) {
-                selectedWattsText.text = getString(R.string.mainSettings_wattageLabel).format(Constants.wattages[layoutPosition])
+                selectedWattsText.text =
+                    getString(R.string.mainSettings_wattageLabel).format(Constants.wattages[layoutPosition])
                 microwaveSettingsPresenter.onUserSelectedWattage(Constants.wattages[layoutPosition])
             }
         })
 
-        numberPicker.setData(Constants.wattages.map { it.toString()})
-
         saveButton.setOnClickListener { microwaveSettingsPresenter.onUserWantsToSaveWattage() }
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mLayoutManagerState = numberPicker.saveInstance()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelable(KEY_LAYOUT_MANAGER_STATE, mLayoutManagerState)
     }
 
     override fun shoWattage(wattage: Int) {
-        numberPicker.goToPosition((wattage / 50) -1)
+        numberPicker.goToPosition((wattage / 50) - 1)
     }
+
     override fun setShowSaveButton(showSaveButton: Boolean) {
         saveButton.visibility = if (showSaveButton) View.VISIBLE else View.INVISIBLE
     }

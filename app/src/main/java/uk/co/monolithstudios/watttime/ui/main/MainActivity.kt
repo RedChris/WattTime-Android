@@ -23,13 +23,17 @@ import uk.co.monolithstudios.watttime.ui.microwavesettings.MicrowaveSettingsActi
 import android.view.WindowManager
 import android.os.Build
 import android.content.res.Configuration
+import android.os.Parcelable
 import uk.co.monolithstudios.watttime.Constants
-
 
 class MainActivity : AppCompatActivity(), MainView, TimePickerFragment.OnFragmentInteractionListener {
 
+    private val KEY_LAYOUT_MANAGER_STATE = "keylayoutmanagerstate"
+
     lateinit var mainActivityPresenter: MainActivityPresenter
     private var timeNumberPickerFragment: TimePickerFragment? = null
+
+    private var mLayoutManagerState: Parcelable? = null
 
     companion object {
         fun start(context: Context) {
@@ -64,6 +68,12 @@ class MainActivity : AppCompatActivity(), MainView, TimePickerFragment.OnFragmen
         })
 
         numberPicker.setData(Constants.wattages.map { it.toString() })
+        if (savedInstanceState != null) {
+            val layoutManagerState: Parcelable = savedInstanceState.getParcelable(KEY_LAYOUT_MANAGER_STATE)
+            numberPicker.restoreInstance(layoutManagerState)
+        } else {
+            numberPicker.goToPosition(0)
+        }
 
         timerButton.setOnClickListener { mainActivityPresenter.onUserWantsToLaunchTimer() }
 
@@ -78,9 +88,15 @@ class MainActivity : AppCompatActivity(), MainView, TimePickerFragment.OnFragmen
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        mLayoutManagerState = numberPicker.saveInstance()
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         mainActivityPresenter.saveInstance(outState)
+        outState.putParcelable(KEY_LAYOUT_MANAGER_STATE, mLayoutManagerState)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {

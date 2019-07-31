@@ -4,7 +4,7 @@ import uk.co.monolithstudios.watttime.data.Prefs
 
 class MicrowaveSettingsPresenter (private val microwaveSettingsView: MicrowaveSettingsView, private val prefs: Prefs) {
 
-    var userWattage = 0
+    private var userWattage = 0
 
     init {
         microwaveSettingsView.setShowSaveButton(false)
