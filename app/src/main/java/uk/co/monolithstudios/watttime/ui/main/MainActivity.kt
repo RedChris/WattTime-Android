@@ -24,6 +24,7 @@ import android.view.WindowManager
 import android.os.Build
 import android.content.res.Configuration
 import android.os.Parcelable
+import com.google.android.material.snackbar.Snackbar
 import uk.co.monolithstudios.watttime.Constants
 
 class MainActivity : AppCompatActivity(), MainView, TimePickerFragment.OnFragmentInteractionListener {
@@ -174,5 +175,9 @@ class MainActivity : AppCompatActivity(), MainView, TimePickerFragment.OnFragmen
 
     override fun showConvertedTime(durationString: String) {
         resultText.text = getString(R.string.main_resultText, durationString)
+    }
+
+    override fun showTimerSet() {
+        Snackbar.make(numberPicker, getString(R.string.main_timerset_snackbar), Snackbar.LENGTH_SHORT).show()
     }
 }

@@ -10,4 +10,5 @@ interface MainView {
     fun showPackageWattage(wattage: Int)
     fun showRestoreDuration(minutes: Long, seconds: Long)
     fun showUserDuration(minutes: Long, seconds: Long)
+    fun showTimerSet()
 }

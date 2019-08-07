@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="42dp"
         android:fontFamily="@font/comfortaa"
         android:text="@string/main_yourMicrowaveText"
         android:textColorLink="#b3ffffff"
@@ -98,9 +98,12 @@
 
     <ImageView
         android:id="@+id/settingsButton"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp" android:contentDescription="main_settings_contdesc"
-        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_settings"/>
+        android:layout_marginEnd="16dp"
+        android:contentDescription="@string/main_settings_contdesc"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_settings" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,6 +23,7 @@
     <string name="timer_message">Time your meal</string>
     <string name="timepicker_set">SET</string>
     <string name="main_settings_contdesc">Settings</string>
+    <string name="main_timerset_snackbar">Timer set</string>
 
     <plurals name="seconds">
         <item quantity="zero">seconds</item>

@@ -60,6 +60,7 @@ class MainActivityPresenter (private val mainView: MainView,
 
     fun onUserWantsToLaunchTimer() {
         timerIntentLauncher.startTimer(convertedDuration.seconds.toInt())
+        mainView.showTimerSet()
     }
 
     fun saveInstance(outState: Bundle) {
