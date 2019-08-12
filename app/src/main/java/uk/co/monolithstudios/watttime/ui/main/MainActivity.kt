@@ -49,25 +49,25 @@ class MainActivity : AppCompatActivity(), MainView, TimePickerFragment.OnFragmen
         window.apply {
 
             if (Build.VERSION.SDK_INT in 19..20) {
-                addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS or WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
-            } else {
-                clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    decorView.systemUiVisibility =
-                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-                } else {
-                    decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                }
+                        addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS or WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+                    } else {
+                        clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            decorView.systemUiVisibility =
+                                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                        } else {
+                            decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        }
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-                    statusBarColor = Color.TRANSPARENT
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                            statusBarColor = Color.TRANSPARENT
                     navigationBarColor = Color.TRANSPARENT
                 }
             }
         }
 
-        setContentView(uk.co.monolithstudios.watttime.R.layout.activity_main)
+        setContentView(R.layout.activity_main)
 
         val animationBackground = mainLayout.background as AnimationDrawable
         animationBackground.apply {
