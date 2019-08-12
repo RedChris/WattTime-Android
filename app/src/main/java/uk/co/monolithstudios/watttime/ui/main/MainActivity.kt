@@ -23,6 +23,7 @@ import uk.co.monolithstudios.watttime.ui.microwavesettings.MicrowaveSettingsActi
 import android.view.WindowManager
 import android.os.Build
 import android.content.res.Configuration
+import android.graphics.Color
 import android.os.Parcelable
 import com.google.android.material.snackbar.Snackbar
 import uk.co.monolithstudios.watttime.Constants
@@ -45,14 +46,28 @@ class MainActivity : AppCompatActivity(), MainView, TimePickerFragment.OnFragmen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-            )
+        window.apply {
+
+            if (Build.VERSION.SDK_INT in 19..20) {
+                addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS or WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+            } else {
+                clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    decorView.systemUiVisibility =
+                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                } else {
+                    decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                }
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                    statusBarColor = Color.TRANSPARENT
+                    navigationBarColor = Color.TRANSPARENT
+                }
+            }
         }
 
-        setContentView(R.layout.activity_main)
+        setContentView(uk.co.monolithstudios.watttime.R.layout.activity_main)
 
         val animationBackground = mainLayout.background as AnimationDrawable
         animationBackground.apply {

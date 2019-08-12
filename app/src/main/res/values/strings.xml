@@ -20,7 +20,7 @@
     <string name="mainSettings_wattageLabel">%1$s Watts</string>
     <string name="mainSettings_saveButton">Save</string>
 
-    <string name="timer_message">Time your meal</string>
+    <string name="timer_message">Finished cooking</string>
     <string name="timepicker_set">SET</string>
     <string name="main_settings_contdesc">Settings</string>
     <string name="main_timerset_snackbar">Timer set</string>
