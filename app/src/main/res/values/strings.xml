@@ -24,6 +24,17 @@
     <string name="timepicker_set">SET</string>
     <string name="main_settings_contdesc">Settings</string>
     <string name="main_timerset_snackbar">Timer set</string>
+    <string name="settings_settings">Settings</string>
+    <string name="settings_clearData">Clear Data</string>
+    <string name="settings_leaveFeedback">Leave Feedback</string>
+    <string name="settings_privacyPolicy">Privacy Policy</string>
+    <string name="settings_appVersion">Version: %1$s</string>
+    <string name="settings_privacyPolicyDialog">Privacy Policy</string>
+    <string name="settings_dialogClose">Close</string>
+    <string name="settings_clearDataDialog">Clear Data</string>
+    <string name="settings_areYouSure">Are you sure you want to clear your data?</string>
+    <string name="settings_clear">Clear</string>
+    <string name="settings_Cancel">Cancel</string>
 
     <plurals name="seconds">
         <item quantity="zero">seconds</item>

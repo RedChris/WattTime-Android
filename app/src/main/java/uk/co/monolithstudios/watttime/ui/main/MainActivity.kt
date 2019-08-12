@@ -26,6 +26,7 @@ import android.content.res.Configuration
 import android.os.Parcelable
 import com.google.android.material.snackbar.Snackbar
 import uk.co.monolithstudios.watttime.Constants
+import uk.co.monolithstudios.watttime.ui.settings.SettingsActivity
 
 class MainActivity : AppCompatActivity(), MainView, TimePickerFragment.OnFragmentInteractionListener {
 
@@ -75,6 +76,8 @@ class MainActivity : AppCompatActivity(), MainView, TimePickerFragment.OnFragmen
         } else {
             numberPicker.goToPosition(0)
         }
+
+        settingsButton.setOnClickListener { mainActivityPresenter.onUserWantsToViewSettings() }
 
         timerButton.setOnClickListener { mainActivityPresenter.onUserWantsToLaunchTimer() }
 
@@ -179,5 +182,9 @@ class MainActivity : AppCompatActivity(), MainView, TimePickerFragment.OnFragmen
 
     override fun showTimerSet() {
         Snackbar.make(numberPicker, getString(R.string.main_timerset_snackbar), Snackbar.LENGTH_SHORT).show()
+    }
+
+    override fun showSettingsScreen() {
+        SettingsActivity.start(this)
     }
 }

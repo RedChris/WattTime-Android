@@ -16,4 +16,8 @@ open class Prefs(context: Context) {
         get() = sharedPreferences.getInt(PREFS_USER_MICROWAVE_WATTAGE, -1)
         set(value) = sharedPreferences.edit().putInt(PREFS_USER_MICROWAVE_WATTAGE, value).apply()
 
+    fun clearData() {
+        sharedPreferences.edit().clear().commit()
+    }
+
 }

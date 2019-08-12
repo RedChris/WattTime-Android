@@ -80,4 +80,8 @@ class MainActivityPresenter (private val mainView: MainView,
         val seconds = duration.minus(Duration.ofMinutes(duration.toMinutes())).seconds
         mainView.showUserDuration(duration.toMinutes(), seconds)
     }
+
+    fun onUserWantsToViewSettings() {
+        mainView.showSettingsScreen()
+    }
 }

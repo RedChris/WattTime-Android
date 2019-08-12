@@ -11,4 +11,5 @@ interface MainView {
     fun showRestoreDuration(minutes: Long, seconds: Long)
     fun showUserDuration(minutes: Long, seconds: Long)
     fun showTimerSet()
+    fun showSettingsScreen()
 }
