@@ -12,9 +12,9 @@ import android.view.View
 import android.view.WindowManager
 import kotlinx.android.synthetic.main.activity_microwave_settings.*
 import kotlinx.android.synthetic.main.view_numberpicker.view.*
-import uk.co.monolithstudios.watttime.Constants
 import uk.co.monolithstudios.watttime.R
 import uk.co.monolithstudios.watttime.data.Prefs
+import uk.co.monolithstudios.watttime.domain.Constants
 import uk.co.monolithstudios.watttime.ui.common.views.SliderLayoutManager
 import uk.co.monolithstudios.watttime.ui.main.MainActivity
 
@@ -65,7 +65,7 @@ class MicrowaveSettingsActivity : AppCompatActivity(), MicrowaveSettingsView {
         }
         numberPicker.setData(Constants.wattages.map { it.toString() })
         if (savedInstanceState != null) {
-            val layoutManagerState: Parcelable = savedInstanceState.getParcelable(KEY_LAYOUT_MANAGER_STATE)
+            val layoutManagerState: Parcelable = savedInstanceState.getParcelable(KEY_LAYOUT_MANAGER_STATE)!!
             numberPicker.restoreInstance(layoutManagerState)
         } else {
             numberPicker.goToPosition(0)

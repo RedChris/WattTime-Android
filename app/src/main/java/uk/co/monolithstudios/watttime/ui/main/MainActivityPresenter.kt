@@ -1,6 +1,7 @@
 package uk.co.monolithstudios.watttime.ui.main
 
 import android.os.Bundle
+import androidx.annotation.VisibleForTesting
 import org.threeten.bp.Duration
 import uk.co.monolithstudios.watttime.data.Prefs
 import uk.co.monolithstudios.watttime.domain.TimeFormatter
@@ -13,7 +14,11 @@ class MainActivityPresenter (private val mainView: MainView,
                              private val timerIntentLauncher: TimerIntentLauncher,
                              private val timeFormatter: TimeFormatter) {
 
-    private val KEY_MICROWAVE_SECONDS = "KEY_MICROWAVE_SECONDS"
+    companion object {
+        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+        internal val KEY_MICROWAVE_SECONDS = "KEY_MICROWAVE_SECONDS"
+
+    }
 
     private val userMicrowaveWattage = prefs.microwaveWattage
     private val hasAvailableTimerIntentApplications = timerIntentLauncher.checkForAvailableTimerApplications()
@@ -28,7 +33,7 @@ class MainActivityPresenter (private val mainView: MainView,
         }
 
         mainView.showUserMicrowaveWattage(userMicrowaveWattage)
-        mainView.showPackageDuration(timeFormatter.convertDurationToSting(duration))
+        mainView.showPackageDuration(timeFormatter.convertDurationToString(duration))
         mainView.showPackageWattage(wattage)
         convertWattage()
     }
@@ -41,14 +46,14 @@ class MainActivityPresenter (private val mainView: MainView,
 
     fun onUserWantsToConvert(duration: Duration) {
         this.duration = duration
-        mainView.showPackageDuration(timeFormatter.convertDurationToSting(duration))
+        mainView.showPackageDuration(timeFormatter.convertDurationToString(duration))
         convertWattage()
     }
 
     private fun convertWattage() {
         val convertedDuration = wattageCalculator.convertMicrowaveTime(userMicrowaveWattage, wattage, duration)
         this.convertedDuration = convertedDuration
-        mainView.showConvertedTime(timeFormatter.convertDurationToSting(convertedDuration))
+        mainView.showConvertedTime(timeFormatter.convertDurationToString(convertedDuration))
         if (hasAvailableTimerIntentApplications) {
             mainView.enableStartTimerButton(true)
         }

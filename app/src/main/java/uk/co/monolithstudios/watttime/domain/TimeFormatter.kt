@@ -8,7 +8,7 @@ import uk.co.monolithstudios.watttime.R
 
 class TimeFormatter(private val context: Context) {
 
-    fun convertDurationToSting(duration: Duration): String {
+    fun convertDurationToString(duration: Duration): String {
         return when {
             duration.compareTo(Duration.ofMinutes(1)) == -1
             -> context.getString(R.string.main_convertedLengthSeconds,

@@ -26,7 +26,7 @@ import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Parcelable
 import com.google.android.material.snackbar.Snackbar
-import uk.co.monolithstudios.watttime.Constants
+import uk.co.monolithstudios.watttime.domain.Constants
 import uk.co.monolithstudios.watttime.ui.settings.SettingsActivity
 
 class MainActivity : AppCompatActivity(), MainView, TimePickerFragment.OnFragmentInteractionListener {
@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity(), MainView, TimePickerFragment.OnFragmen
 
         numberPicker.setData(Constants.wattages.map { it.toString() })
         if (savedInstanceState != null) {
-            val layoutManagerState: Parcelable = savedInstanceState.getParcelable(KEY_LAYOUT_MANAGER_STATE)
+            val layoutManagerState: Parcelable = savedInstanceState.getParcelable(KEY_LAYOUT_MANAGER_STATE)!!
             numberPicker.restoreInstance(layoutManagerState)
         } else {
             numberPicker.goToPosition(0)
