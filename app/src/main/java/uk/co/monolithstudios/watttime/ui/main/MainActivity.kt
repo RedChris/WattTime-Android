@@ -25,7 +25,11 @@ import android.os.Build
 import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Parcelable
+import com.crashlytics.android.Crashlytics
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_main.mainLayout
+import kotlinx.android.synthetic.main.activity_main.numberPicker
+import kotlinx.android.synthetic.main.activity_microwave_settings.*
 import uk.co.monolithstudios.watttime.domain.Constants
 import uk.co.monolithstudios.watttime.ui.settings.SettingsActivity
 
@@ -37,6 +41,7 @@ class MainActivity : AppCompatActivity(), MainView, TimePickerFragment.OnFragmen
     private var timeNumberPickerFragment: TimePickerFragment? = null
 
     private var mLayoutManagerState: Parcelable? = null
+    private var defaultPosition = 0
 
     companion object {
         fun start(context: Context) {
@@ -89,7 +94,7 @@ class MainActivity : AppCompatActivity(), MainView, TimePickerFragment.OnFragmen
             val layoutManagerState: Parcelable = savedInstanceState.getParcelable(KEY_LAYOUT_MANAGER_STATE)!!
             numberPicker.restoreInstance(layoutManagerState)
         } else {
-            numberPicker.goToPosition(0)
+            numberPicker.goToPosition(defaultPosition)
         }
 
         settingsButton.setOnClickListener { mainActivityPresenter.onUserWantsToViewSettings() }
@@ -141,23 +146,37 @@ class MainActivity : AppCompatActivity(), MainView, TimePickerFragment.OnFragmen
     }
 
     override fun showPackageDuration(durationString: String) {
-        forTimeText.text = getString(R.string.main_for, durationString)
+        try {
+            val debugText = forTimeText.text
+            Crashlytics.log("is landscape = " + (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE))
+            forTimeText.text = getString(R.string.main_for, durationString)
 
-        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            val spannable = SpannableString(getString(R.string.main_for, durationString))
+            if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                val spannable = SpannableString(getString(R.string.main_for, durationString))
+                Crashlytics.log("main activity, log set span 149 was \"$debugText\" it is now \"$durationString\"")
+                spannable.setSpan(object : ClickableSpan() {
+                    override fun onClick(widget: View) {
+                        mainActivityPresenter.onUserWantsToSeeSelectTimer()
+                    }
 
-            spannable.setSpan(object: ClickableSpan() {
-                override fun onClick(widget: View) {
-                    mainActivityPresenter.onUserWantsToSeeSelectTimer()
+                }, 4, spannable.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                Crashlytics.log("main activity, log set span 157 was \"$debugText\" it is now \"$durationString\"")
+                spannable.setSpan(
+                    RelativeSizeSpan(1.2f),
+                    4,
+                    spannable.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+
+                forTimeText.apply {
+                    text = spannable
+                    movementMethod = LinkMovementMethod.getInstance()
                 }
-
-            } , 4, spannable.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-            spannable.setSpan(RelativeSizeSpan(1.2f),  4, spannable.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-
-            forTimeText.apply {
-                text = spannable
-                movementMethod = LinkMovementMethod.getInstance()
             }
+        } catch (e:IndexOutOfBoundsException) {
+            e.printStackTrace()
+            Crashlytics.logException(e)
+            Crashlytics.log("error caught on top new string  $durationString")
         }
     }
 
@@ -167,19 +186,26 @@ class MainActivity : AppCompatActivity(), MainView, TimePickerFragment.OnFragmen
     }
 
     override fun showUserMicrowaveWattage(userMicrowaveWattage: Int) {
-        val spannable = SpannableString(getString(R.string.main_yourMicrowaveText, userMicrowaveWattage.toString()))
+        try {
+            val spannable = SpannableString(getString(R.string.main_yourMicrowaveText, userMicrowaveWattage.toString()))
 
-        spannable.setSpan(object: ClickableSpan() {
-            override fun onClick(widget: View) {
-                mainActivityPresenter.onUserWantsToChangeUserWattage()
+            spannable.setSpan(object: ClickableSpan() {
+                override fun onClick(widget: View) {
+                    mainActivityPresenter.onUserWantsToChangeUserWattage()
+                }
+
+            } , 20, spannable.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            spannable.setSpan(RelativeSizeSpan(1.2f),  21, spannable.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+            yourMicrowaveText.apply {
+                text = spannable
+                movementMethod = LinkMovementMethod.getInstance()
             }
 
-        } , 20, spannable.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        spannable.setSpan(RelativeSizeSpan(1.2f),  21, spannable.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-
-        yourMicrowaveText.apply {
-            text = spannable
-            movementMethod = LinkMovementMethod.getInstance()
+        } catch (e:IndexOutOfBoundsException) {
+            e.printStackTrace()
+            Crashlytics.logException(e)
+            Crashlytics.log("error caught on top new wattage  $userMicrowaveWattage")
         }
     }
 
@@ -201,5 +227,9 @@ class MainActivity : AppCompatActivity(), MainView, TimePickerFragment.OnFragmen
 
     override fun showSettingsScreen() {
         SettingsActivity.start(this)
+    }
+
+    override fun showPreviousProductWattage(wattage: Int) {
+        defaultPosition = (wattage / 50) - 1
     }
 }

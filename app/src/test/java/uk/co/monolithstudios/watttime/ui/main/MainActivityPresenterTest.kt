@@ -1,13 +1,11 @@
 package uk.co.monolithstudios.watttime.ui.main
 
 import android.os.Bundle
-import io.mockk.Called
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
 
-import org.junit.jupiter.api.Assertions.*
 import org.threeten.bp.Duration
 import uk.co.monolithstudios.watttime.data.Prefs
 import uk.co.monolithstudios.watttime.domain.TimeFormatter
@@ -27,7 +25,7 @@ internal class MainActivityPresenterTest {
     fun `init with available timer applications`() {
         // Arrange
         every { timerIntentLauncher.checkForAvailableTimerApplications() } returns true
-        every { prefs.microwaveWattage } returns 900
+        every { prefs.userMicrowaveWattage } returns 900
 
         // Act
         MainActivityPresenter(view, prefs, wattageCalculator, timerIntentLauncher, timeFormatter)

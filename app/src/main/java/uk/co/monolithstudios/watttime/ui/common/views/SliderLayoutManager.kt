@@ -75,7 +75,7 @@ class SliderLayoutManager(context: Context?) : LinearLayoutManager(context) {
     fun getPosition(): Int {
         val recyclerViewCenterX = getRecyclerViewCenterX()
         var minDistance = recyclerView.width
-        var position = -1
+        var position = 0
         for (i in 0 until recyclerView.childCount) {
             val child = recyclerView.getChildAt(i)
             val childCenterX =

@@ -31,7 +31,7 @@ internal class PrefsTest {
         every { sharedPreferences.getInt(any(), any()) } returns userMicroWaveWattage
 
         // Act
-        val result = subject.microwaveWattage
+        val result = subject.userMicrowaveWattage
 
         // Assert
         assertEquals(userMicroWaveWattage, result, "Returned wattage is different to expected")
@@ -45,7 +45,7 @@ internal class PrefsTest {
         every { editor.apply() } returns Unit
 
         // Act
-        subject.microwaveWattage = 700
+        subject.userMicrowaveWattage = 700
 
         // Assert
         verify { editor.putInt(Prefs.PREFS_USER_MICROWAVE_WATTAGE, 700) }

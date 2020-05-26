@@ -12,4 +12,5 @@ interface MainView {
     fun showUserDuration(minutes: Long, seconds: Long)
     fun showTimerSet()
     fun showSettingsScreen()
+    fun showPreviousProductWattage(wattage: Int)
 }

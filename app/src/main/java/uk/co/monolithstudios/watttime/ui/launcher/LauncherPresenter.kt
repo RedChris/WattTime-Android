@@ -5,7 +5,7 @@ import uk.co.monolithstudios.watttime.data.Prefs
 class LauncherPresenter(launcherView: LauncherView, prefs: Prefs) {
 
     init {
-        if (prefs.microwaveWattage == -1) {
+        if (prefs.userMicrowaveWattage == -1) {
             launcherView.showMicrowaveSettingsScreen()
         } else {
             launcherView.showMainScreen()

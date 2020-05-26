@@ -9,7 +9,7 @@ import uk.co.monolithstudios.watttime.domain.TimerIntentLauncher
 import uk.co.monolithstudios.watttime.domain.WattageCalculator
 
 class MainActivityPresenter (private val mainView: MainView,
-                             prefs: Prefs,
+                             private val prefs: Prefs,
                              private val wattageCalculator: WattageCalculator,
                              private val timerIntentLauncher: TimerIntentLauncher,
                              private val timeFormatter: TimeFormatter) {
@@ -20,7 +20,7 @@ class MainActivityPresenter (private val mainView: MainView,
 
     }
 
-    private val userMicrowaveWattage = prefs.microwaveWattage
+    private val userMicrowaveWattage = prefs.userMicrowaveWattage
     private val hasAvailableTimerIntentApplications = timerIntentLauncher.checkForAvailableTimerApplications()
     private var wattage = 0
     private var duration: Duration = Duration.ZERO
@@ -35,10 +35,14 @@ class MainActivityPresenter (private val mainView: MainView,
         mainView.showUserMicrowaveWattage(userMicrowaveWattage)
         mainView.showPackageDuration(timeFormatter.convertDurationToString(duration))
         mainView.showPackageWattage(wattage)
+        if (prefs.packageMicrowaveWattage != -1) {
+            mainView.showPreviousProductWattage(prefs.packageMicrowaveWattage)
+        }
         convertWattage()
     }
 
     fun onUserWantsToSetProductWattage(productWattage: Int) {
+        prefs.packageMicrowaveWattage = productWattage
         this.wattage = productWattage
         mainView.showPackageWattage(wattage)
         convertWattage()

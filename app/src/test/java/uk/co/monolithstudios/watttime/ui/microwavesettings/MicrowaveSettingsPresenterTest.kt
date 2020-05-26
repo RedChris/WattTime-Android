@@ -5,7 +5,6 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
 
-import org.junit.jupiter.api.Assertions.*
 import uk.co.monolithstudios.watttime.data.Prefs
 
 internal class MicrowaveSettingsPresenterTest {
@@ -17,7 +16,7 @@ internal class MicrowaveSettingsPresenterTest {
     @Test
     fun `init from initial load`() {
         // Arrange
-        every { prefs.microwaveWattage} returns -1
+        every { prefs.userMicrowaveWattage} returns -1
 
         // Act
         MicrowaveSettingsPresenter(view, prefs)
@@ -32,7 +31,7 @@ internal class MicrowaveSettingsPresenterTest {
     @Test
     fun `init from after initial load`() {
         // Arrange
-        every { prefs.microwaveWattage} returns 500
+        every { prefs.userMicrowaveWattage} returns 500
 
         // Act
         MicrowaveSettingsPresenter(view, prefs)
@@ -63,6 +62,6 @@ internal class MicrowaveSettingsPresenterTest {
 
         // Assert
         verify { view.showMainScreen() }
-        verify { prefs.microwaveWattage = 300 }
+        verify { prefs.userMicrowaveWattage = 300 }
     }
 }
